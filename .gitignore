@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# Environment variables (contain passwords/secrets)
+.env
+backend/.env
+frontend/.env
+
+# Build output
+frontend/dist/
+frontend/build/
+dist/
+
+# Uploads
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Scratch/temp files
+backend/scratch/
+
+# VPN config (sensitive - certs and credentials)
+vpn/*.ovpn
+vpn/*.crt
+vpn/*.key
+vpn/auth.txt
+vpn/*.log
+
+# Config files
+vite.config.js
+frontend/vite.config.js
+
+# SQLite user database (contains password hashes — never commit)
+backend/db/users.sqlite
+backend/db/users.sqlite-shm
+backend/db/users.sqlite-wal

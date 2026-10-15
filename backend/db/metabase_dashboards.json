@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "prueba",
+    "description": "prueba",
+    "metabase_id": 1,
+    "type": "dashboard",
+    "created_at": "2026-06-04T20:17:47.235Z"
+  },
+  {
+    "id": 2,
+    "name": "erwerw",
+    "description": "",
+    "metabase_id": 35,
+    "type": "dashboard",
+    "created_at": "2026-06-05T20:36:44.424Z"
+  }
+]

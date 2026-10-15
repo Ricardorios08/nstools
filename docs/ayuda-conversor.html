@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guía del Conversor de Extractos Bancarios</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 13px;
+      color: #1a1a2e;
+      background: #f5f7fa;
+      padding: 30px 20px;
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* ── PORTADA ── */
+    .cover {
+      background: linear-gradient(135deg, #1a1a5e 0%, #16213e 60%, #0f3460 100%);
+      color: white;
+      padding: 60px 50px 50px;
+      position: relative;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 40px;
+      background: white;
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .cover .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 4px 16px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .cover h1 {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    .cover .subtitle {
+      font-size: 14px;
+      opacity: 0.75;
+      margin-bottom: 30px;
+    }
+    .cover .meta {
+      display: flex;
+      gap: 30px;
+      font-size: 11px;
+      opacity: 0.6;
+    }
+
+    /* ── CONTENIDO ── */
+    .content {
+      padding: 50px 50px 60px;
+    }
+
+    /* ── SECCIONES ── */
+    .section {
+      margin-bottom: 36px;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8eaf6;
+    }
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .icon-blue   { background: #e3f2fd; }
+    .icon-green  { background: #e8f5e9; }
+    .icon-orange { background: #fff3e0; }
+    .icon-red    { background: #fce4ec; }
+    .icon-purple { background: #f3e5f5; }
+
+    .section h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a1a5e;
+    }
+
+    p { line-height: 1.7; margin-bottom: 10px; color: #3d3d5c; }
+
+    /* ── PASOS ── */
+    .steps { list-style: none; counter-reset: step; }
+    .steps li {
+      counter-increment: step;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      min-width: 26px;
+      height: 26px;
+      background: #1a1a5e;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .steps li .step-text { color: #3d3d5c; line-height: 1.6; }
+    .steps li strong { color: #1a1a5e; }
+
+    /* ── TABLA DE TIPOS DE MOVIMIENTO ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 12.5px;
+    }
+    thead tr {
+      background: #1a1a5e;
+      color: white;
+    }
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+    }
+    tbody tr { border-bottom: 1px solid #eef0f8; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 9px 14px; color: #3d3d5c; }
+    tbody tr:nth-child(even) { background: #f8f9ff; }
+
+    /* ── PILL / BADGE ── */
+    .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .pill-red    { background: #fce4ec; color: #c62828; }
+    .pill-green  { background: #e8f5e9; color: #2e7d32; }
+    .pill-blue   { background: #e3f2fd; color: #1565c0; }
+    .pill-gray   { background: #f5f5f5; color: #555; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { line-height: 1.65; color: #3d3d5c; font-size: 12.5px; }
+    .callout-body strong { display: block; margin-bottom: 3px; font-size: 13px; }
+
+    .callout-warning { background: #fff8e1; border-left: 4px solid #f9a825; }
+    .callout-info    { background: #e3f2fd; border-left: 4px solid #1976d2; }
+    .callout-success { background: #e8f5e9; border-left: 4px solid #388e3c; }
+    .callout-error   { background: #fce4ec; border-left: 4px solid #c62828; }
+
+    /* ── FLUJO VISUAL ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+    }
+    .flow-box {
+      background: #f0f4ff;
+      border: 1.5px solid #c5cae9;
+      border-radius: 8px;
+      padding: 10px 16px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a5e;
+      min-width: 110px;
+    }
+    .flow-arrow {
+      font-size: 18px;
+      color: #9fa8da;
+      font-weight: 700;
+    }
+
+    /* ── FAQ ── */
+    .faq-item { margin-bottom: 18px; }
+    .faq-q {
+      font-weight: 700;
+      color: #1a1a5e;
+      margin-bottom: 5px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .faq-q span.q-badge {
+      background: #1a1a5e;
+      color: white;
+      border-radius: 6px;
+      padding: 1px 7px;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .faq-a { color: #3d3d5c; line-height: 1.65; padding-left: 28px; }
+
+    /* ── SEPARADOR ── */
+    hr { border: none; border-top: 2px solid #eef0f8; margin: 36px 0; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #f0f4ff;
+      border-top: 2px solid #e8eaf6;
+      padding: 20px 50px;
+      font-size: 11px;
+      color: #888;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; padding: 0; }
+      .page {
+        box-shadow: none;
+        border-radius: 0;
+        max-width: 100%;
+      }
+      .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .section-icon, thead tr, .pill, .callout, .flow-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PORTADA -->
+  <div class="cover">
+    <div class="badge">Guía del operador</div>
+    <h1>Conversor de Extractos Bancarios</h1>
+    <div class="subtitle">Todo lo que necesitás saber para usar el conversor correctamente</div>
+    <div class="meta">
+      <span>📅 Septiembre 2026</span>
+      <span>🏛️ Municipalidad de Guaymallén</span>
+      <span>📄 Versión 1.0</span>
+    </div>
+  </div>
+
+  <!-- CONTENIDO -->
+  <div class="content">
+
+    <!-- ¿QUÉ HACE? -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-blue">🔄</div>
+        <h2>¿Para qué sirve el conversor?</h2>
+      </div>
+      <p>
+        El conversor toma el <strong>extracto bancario</strong> que descargás del banco (en formato Excel o PDF)
+        y lo transforma en un <strong>archivo de texto (.txt)</strong> con el formato que necesita el sistema
+        contable de la Municipalidad para registrar los movimientos.
+      </p>
+      <p>
+        Sin el conversor, tendrías que tipear a mano cada movimiento. Con el conversor,
+        el proceso es automático y lleva solo unos segundos.
+      </p>
+
+      <div class="flow">
+        <div class="flow-box">📊 Extracto del banco<br><small>(.xlsx / .xls / .pdf)</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">⚙️ Conversor</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">📄 Archivo listo<br><small>(.txt para el sistema)</small></div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <!-- CÓMO USARLO -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-green">📋</div>
+        <h2>Cómo usar el conversor, paso a paso</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <div class="step-text">
+            <strong>Descargá el extracto del banco.</strong> Entrá al home banking y descargá el extracto
+            del período que necesitás. Guardalo en tu computadora (generalmente en la carpeta Descargas).
+            Puede ser Excel (.xlsx) o PDF.
+          </div>
+        </li>
+        <li>
+          <div class="step-text">
+            <strong>Abrí el conversor</strong> desde el navegador y hacé clic en
+            <em>"Seleccionar archivo"</em>.
+          </div>
+        </li>
+        <li>
+          <div class="step-text">
+            <strong>Elegí el archivo</strong> que descargaste del banco. Si tenés varios meses,
+            podés subirlos todos juntos y el conversor los une en orden cronológico.
+          </div>
+        </li>
+        <li>
+          <div class="step-text">
+            <strong>Verificá que los datos se vean bien</strong> en la tabla de previsualización.
+            Controlá que las fechas, los importes y los movimientos sean los correctos.
+          </div>
+        </li>
+        <li>
+          <div class="step-text">
+            <strong>Completá los datos del banco</strong> (sucursal, número de cuenta, número de hoja)
+            si no se completaron solos.
+          </div>
+        </li>
+        <li>
+          <div class="step-text">
+            <strong>Hacé clic en "Descargar .txt".</strong> Se va a guardar el archivo final
+            listo para importar al sistema contable.
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <hr/>
+
+    <!-- TIPOS DE MOVIMIENTO -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-orange">💰</div>
+        <h2>Tipos de movimiento: Débito y Haber</h2>
+      </div>
+      <p>
+        Cada movimiento del extracto es clasificado automáticamente como <strong>Débito</strong> (plata que sale)
+        o <strong>Haber</strong> (plata que entra). Esto se determina por el signo del importe en el extracto:
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Importe en el extracto</th>
+            <th>Tipo de movimiento</th>
+            <th>Código en el archivo</th>
+            <th>Significado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill pill-red">Número negativo</span> &nbsp;ej: -120.000</td>
+            <td>Débito (D)</td>
+            <td><strong>010</strong></td>
+            <td>Plata que salió de la cuenta</td>
+          </tr>
+          <tr>
+            <td><span class="pill pill-green">Número positivo</span> &nbsp;ej: +50.000</td>
+            <td>Haber (H)</td>
+            <td><strong>510</strong></td>
+            <td>Plata que entró a la cuenta</td>
+          </tr>
+          <tr>
+            <td><span class="pill pill-blue">Descripción: "saldo"</span></td>
+            <td>Saldo</td>
+            <td><strong>502</strong></td>
+            <td>Registro de saldo (no es movimiento)</td>
+          </tr>
+          <tr>
+            <td><span class="pill pill-gray">Vacío o cero</span></td>
+            <td>—</td>
+            <td>Se descarta</td>
+            <td>La línea se ignora, no aparece</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-info" style="margin-top:16px">
+        <div class="callout-icon">ℹ️</div>
+        <div class="callout-body">
+          <strong>¿Por qué algunos bancos tienen columnas separadas?</strong>
+          Algunos extractos tienen columnas "Debe" y "Haber" por separado. Otros (como Supervielle)
+          tienen una sola columna "Importe" con números positivos y negativos. El conversor
+          detecta automáticamente qué formato usa cada banco.
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <!-- QUÉ FILAS SE INCLUYEN -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-purple">🔍</div>
+        <h2>¿Qué líneas se incluyen y cuáles se descartan?</h2>
+      </div>
+      <p>
+        No todas las líneas del extracto bancario se convierten. El conversor aplica filtros
+        para quedarse solo con los movimientos reales:
+      </p>
+
+      <div class="callout callout-success">
+        <div class="callout-icon">✅</div>
+        <div class="callout-body">
+          <strong>Se incluyen las filas que tienen:</strong>
+          Una fecha válida (día/mes/año) Y un importe distinto de cero.
+        </div>
+      </div>
+
+      <div class="callout callout-error">
+        <div class="callout-icon">❌</div>
+        <div class="callout-body">
+          <strong>Se descartan automáticamente las filas que tienen:</strong>
+          Fecha vacía, importe vacío, importe igual a cero, o filas completamente en blanco
+          (como encabezados, saldos de apertura, títulos del banco, etc.).
+        </div>
+      </div>
+
+      <div class="callout callout-warning">
+        <div class="callout-icon">⚠️</div>
+        <div class="callout-body">
+          <strong>Si la cantidad de líneas que aparece no coincide con el extracto original:</strong>
+          Es normal que haya menos líneas, porque las filas vacías, los títulos y los saldos
+          iniciales/finales se filtran. Si aparecen <em>más</em> líneas de las esperadas,
+          es probable que el archivo Excel tenga filas ocultas o datos en otras hojas.
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <!-- FORMATOS SOPORTADOS -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-blue">🏦</div>
+        <h2>Bancos y formatos soportados</h2>
+      </div>
+      <p>
+        El conversor puede leer extractos de distintos bancos. Detecta automáticamente el formato,
+        pero es importante subir el archivo <strong>tal como lo descargás del banco</strong>,
+        sin modificar la estructura.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Banco / Formato</th>
+            <th>Tipo de archivo</th>
+            <th>Observaciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Banco Nación</td>
+            <td><span class="pill pill-green">Excel (.xlsx)</span></td>
+            <td>Tiene columnas Debe / Haber separadas</td>
+          </tr>
+          <tr>
+            <td>Supervielle</td>
+            <td><span class="pill pill-green">Excel (.xlsx)</span></td>
+            <td>Importe único con signo positivo/negativo</td>
+          </tr>
+          <tr>
+            <td>Galicia</td>
+            <td><span class="pill pill-green">Excel (.xlsx)</span></td>
+            <td>Similar a Supervielle</td>
+          </tr>
+          <tr>
+            <td>Credicoop</td>
+            <td><span class="pill pill-green">Excel (.xlsx)</span></td>
+            <td>Similar a Supervielle</td>
+          </tr>
+          <tr>
+            <td>Tarjeta Nación</td>
+            <td><span class="pill pill-green">Excel (.xlsx)</span></td>
+            <td>Formato especial "Reporte de Cuenta", se detecta automáticamente</td>
+          </tr>
+          <tr>
+            <td>Cualquier banco</td>
+            <td><span class="pill pill-blue">PDF</span></td>
+            <td>Compatible si el PDF tiene texto seleccionable (no escaneado)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <hr/>
+
+    <!-- PREGUNTAS FRECUENTES -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-orange">❓</div>
+        <h2>Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          El conversor trajo muchas más líneas de las que esperaba. ¿Por qué?
+        </div>
+        <div class="faq-a">
+          Si editaste el Excel antes de subirlo, verificá que no haya quedado información
+          de otras fechas o meses anteriores en el archivo. También puede pasar si el extracto
+          cubre un rango de fechas más amplio del que necesitás. En ese caso, podés filtrar
+          las fechas directamente en la tabla de previsualización antes de descargar el .txt.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          Me aparece el error "No se encontraron movimientos válidos". ¿Qué hago?
+        </div>
+        <div class="faq-a">
+          Significa que el conversor no pudo identificar ninguna fila con fecha e importe válidos.
+          Verificá que el archivo no esté vacío o que no sea un formato de extracto que el sistema
+          aún no reconoce. Consultá con el responsable del sistema.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          ¿Puedo subir varios meses de una vez?
+        </div>
+        <div class="faq-a">
+          Sí. Podés seleccionar múltiples archivos y el conversor los procesa todos juntos,
+          ordenando los movimientos por fecha cronológicamente de forma automática.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          ¿Qué son los campos "Sucursal", "Cuenta" y "Número de Hoja"?
+        </div>
+        <div class="faq-a">
+          Son datos del banco que van al inicio de cada línea del archivo final y que el sistema
+          contable usa para identificar de qué cuenta bancaria provienen los movimientos.
+          En muchos casos el conversor los detecta solo del extracto; si no, los completás
+          manualmente antes de descargar.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          ¿Para qué sirven los registros 001, 999, 992... al inicio y fin del archivo?
+        </div>
+        <div class="faq-a">
+          Son registros de apertura y cierre que el sistema contable requiere para saber dónde
+          empieza y termina el bloque de movimientos. Se generan automáticamente, no hace falta
+          que los toques. Los movimientos reales van entre el 002 y el anterior al 999.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          Las fechas aparecen en un formato raro (ej: 20260302). ¿Es correcto?
+        </div>
+        <div class="faq-a">
+          Sí, es correcto. El archivo .txt usa el formato AAAAMMDD (año, mes, día sin separadores)
+          que es el formato que espera el sistema contable. La fecha 20260302 significa
+          02 de marzo de 2026.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span class="q-badge">P</span>
+          Los importes en el .txt tienen 15 dígitos y parecen muy grandes. ¿Están bien?
+        </div>
+        <div class="faq-a">
+          Sí, es correcto. Los importes se guardan <strong>en centavos</strong> para evitar decimales.
+          Por ejemplo, $1.234,56 se guarda como <em>000000000123456</em>. El sistema contable
+          los interpreta dividiendo por 100 automáticamente.
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <!-- GLOSARIO -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon icon-purple">📖</div>
+        <h2>Glosario de términos</h2>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Término</th>
+            <th>Qué significa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Extracto bancario</strong></td>
+            <td>El listado de todos los movimientos de una cuenta bancaria en un período</td>
+          </tr>
+          <tr>
+            <td><strong>Débito (D / 010)</strong></td>
+            <td>Plata que salió de la cuenta (egreso, pago, transferencia enviada)</td>
+          </tr>
+          <tr>
+            <td><strong>Haber (H / 510)</strong></td>
+            <td>Plata que entró a la cuenta (cobro, depósito, transferencia recibida)</td>
+          </tr>
+          <tr>
+            <td><strong>Saldo (502)</strong></td>
+            <td>El saldo de la cuenta en un momento dado. No es un movimiento, es una foto del estado de la cuenta</td>
+          </tr>
+          <tr>
+            <td><strong>Comprobante / Referencia</strong></td>
+            <td>Número que identifica cada operación. Sirve para rastrear el movimiento en el banco</td>
+          </tr>
+          <tr>
+            <td><strong>Archivo .txt</strong></td>
+            <td>El archivo de texto que genera el conversor y que se importa al sistema contable</td>
+          </tr>
+          <tr>
+            <td><strong>Sucursal</strong></td>
+            <td>Número de la sucursal bancaria donde está radicada la cuenta</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Municipalidad de Guaymallén — Sistema de Migración Contable</span>
+    <span>Para consultas técnicas, contactar al área de Sistemas</span>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
