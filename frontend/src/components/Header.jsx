@@ -52,7 +52,7 @@ const Header = ({ user, onMenuToggle, onLogout, theme, onThemeToggle, onRoleChan
         <button className="menu-toggle" onClick={onMenuToggle}>
           <Menu size={24} />
         </button>
-        <div className="header-title">Conversor Bancario</div>
+        <div className="header-title">OSEP - Conversor Bancario</div>
         {isSimulating && (
           <span className="role-sim-badge">
             👁️ simulando: {currentRoleMeta?.label ?? user?.rol}
