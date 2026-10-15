@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const { requestContext } = require('./context');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret';
 

@@ -49,7 +49,7 @@ const UserManagement = ({ user: currentUserProp }) => {
             setMessage({ type: 'success', text: 'Usuario creado con éxito' });
             setNombreUsuario('');
             setPassword('');
-            setRol('usuario');
+            setRol('conversor');
             fetchUsers();
         } catch (err) {
             setMessage({ type: 'error', text: err.response?.data?.error || 'Error al crear usuario' });
@@ -86,9 +86,8 @@ const UserManagement = ({ user: currentUserProp }) => {
     };
 
     const isAdmin = currentUser?.rol === 'admin' || currentUser?.rol === 'superadmin';
-    const isMunicipalidad = currentUser?.rol === 'municipalidad';
     const isConversorEditar = currentUser?.rol === 'conversor_editar';
-    const canAccess = isAdmin || isMunicipalidad || isConversorEditar;
+    const canAccess = isAdmin || isConversorEditar;
 
     if (!canAccess) {
         return <div className="body-content"><h1>Acceso denegado</h1></div>;
@@ -149,8 +148,6 @@ const UserManagement = ({ user: currentUserProp }) => {
                                     value={rol}
                                     onChange={(e) => setRol(e.target.value)}
                                 >
-                                    <option value="usuario">Usuario</option>
-                                    <option value="municipalidad">Municipalidad</option>
                                     <option value="conversor">Conversor (solo lectura)</option>
                                     <option value="conversor_admin">Conversor Admin (edición)</option>
                                     <option value="conversor_editar">Conversor Editar (edición + usuarios)</option>
@@ -200,8 +197,6 @@ const UserManagement = ({ user: currentUserProp }) => {
                                             disabled={!isAdmin}
                                             style={{ padding: '0.2rem', minHeight: 'auto', opacity: !isAdmin ? 0.6 : 1 }}
                                         >
-                                            <option value="usuario">Usuario</option>
-                                            <option value="municipalidad">Municipalidad</option>
                                             <option value="conversor">Conversor (solo lectura)</option>
                                             <option value="conversor_admin">Conversor Admin (edición)</option>
                                             <option value="conversor_editar">Conversor Editar (edición + usuarios)</option>

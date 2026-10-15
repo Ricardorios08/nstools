@@ -720,7 +720,7 @@ router.get('/cuentas', (req, res) => {
     try {
         const fs = require('fs');
         const path = require('path');
-        const p = path.join(__dirname, '../../legacy/java-legacy/cuentas_bancarias.csv');
+        const p = path.join(__dirname, '../data/cuentas_bancarias.csv');
 
         if (!fs.existsSync(p)) {
             return res.json([]);

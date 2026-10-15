@@ -16,7 +16,8 @@ try {
             id      INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre_usuario TEXT NOT NULL UNIQUE,
             password       TEXT NOT NULL,
-            rol            TEXT NOT NULL DEFAULT 'viewer'
+            rol            TEXT NOT NULL DEFAULT 'viewer',
+            theme          TEXT NOT NULL DEFAULT 'dark'
         )
     `);
 

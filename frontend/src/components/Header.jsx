@@ -1,36 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Database, Activity, Menu, Settings, LogOut, Sun, Moon, Users, ChevronRight, ChevronDown } from 'lucide-react';
-import API_BASE_URL from '../config';
+import { Menu, Settings, LogOut, Sun, Moon, Users, ChevronRight, ChevronDown } from 'lucide-react';
 
 const ROLES = [
-  { value: 'superadmin',   label: 'Super Admin',   color: '#a855f7' },
-  { value: 'admin',        label: 'Admin',          color: '#818cf8' },
-  { value: 'usuario',      label: 'Usuario',        color: '#38bdf8' },
-  { value: 'municipalidad',label: 'Municipalidad',  color: '#34d399' },
-  { value: 'conversor',    label: 'Conversor',      color: '#fbbf24' },
+  { value: 'superadmin',       label: 'Super Admin',      color: '#a855f7' },
+  { value: 'admin',            label: 'Admin',            color: '#818cf8' },
+  { value: 'conversor_editar', label: 'Conversor Editar', color: '#34d399' },
+  { value: 'conversor_admin',  label: 'Conversor Admin',  color: '#38bdf8' },
+  { value: 'conversor',        label: 'Conversor',        color: '#fbbf24' },
 ];
 
 const Header = ({ user, onMenuToggle, onLogout, theme, onThemeToggle, onRoleChange, originalRole }) => {
-  const [status, setStatus] = useState({ maria: 'pending', postgres: 'pending' });
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [rolesExpanded, setRolesExpanded] = useState(false);
   const dropdownRef = useRef(null);
-
-  // DB connection polling
-  useEffect(() => {
-    const checkConnections = async () => {
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/test-connections`);
-        const data = await response.json();
-        setStatus({ maria: data.maria.status, postgres: data.postgres.status });
-      } catch {
-        setStatus({ maria: 'failed', postgres: 'failed' });
-      }
-    };
-    checkConnections();
-    const interval = setInterval(checkConnections, 30000);
-    return () => clearInterval(interval);
-  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -63,8 +45,6 @@ const Header = ({ user, onMenuToggle, onLogout, theme, onThemeToggle, onRoleChan
   const isSimulating = originalRole && user?.rol !== originalRole;
   const currentRoleMeta = ROLES.find(r => r.value === user?.rol);
 
-  const StatusDot = ({ type }) => <div className={`status-dot ${type}`} />;
-
   return (
     <header className="header">
       {/* Left: hamburger + title */}
@@ -72,7 +52,7 @@ const Header = ({ user, onMenuToggle, onLogout, theme, onThemeToggle, onRoleChan
         <button className="menu-toggle" onClick={onMenuToggle}>
           <Menu size={24} />
         </button>
-        <div className="header-title">Migration Overview</div>
+        <div className="header-title">Conversor Bancario</div>
         {isSimulating && (
           <span className="role-sim-badge">
             👁️ simulando: {currentRoleMeta?.label ?? user?.rol}
@@ -82,24 +62,6 @@ const Header = ({ user, onMenuToggle, onLogout, theme, onThemeToggle, onRoleChan
 
       {/* Right: connections + settings */}
       <div className="header-right">
-        {user?.rol !== 'municipalidad' && user?.rol !== 'conversor' && user?.rol !== 'conversor_editar' && (
-          <div className="connection-status">
-            <div className="status-indicator">
-              <Database size={16} color="#10b981" />
-              <span>MariaDB: 192.168.133.15</span>
-              <StatusDot type={status.maria} />
-            </div>
-            <div className="status-indicator">
-              <Database size={16} color="#2563eb" />
-              <span>Postgres: aush6.intranet</span>
-              <StatusDot type={status.postgres} />
-            </div>
-            <div className="status-indicator" style={{ border: 'none', background: 'transparent' }}>
-              <Activity size={18} color="var(--primary)" />
-            </div>
-          </div>
-        )}
-
         {/* Settings button */}
         <div className="settings-wrapper" ref={dropdownRef}>
           <button

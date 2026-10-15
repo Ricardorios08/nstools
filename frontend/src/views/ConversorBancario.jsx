@@ -18,7 +18,7 @@ const COL_LABELS = {
 
 export default function ConversorBancario({ user }) {
   // conversor_admin, conversor_editar, superadmin y municipalidad pueden editar; conversor solo lee
-  const canEdit = user?.rol === 'conversor_admin' || user?.rol === 'conversor_editar' || user?.rol === 'superadmin' || user?.rol === 'municipalidad' || user?.rol === 'admin';
+  const canEdit = user?.rol === 'conversor_admin' || user?.rol === 'conversor_editar' || user?.rol === 'superadmin' || user?.rol === 'admin';
   const [dragging, setDragging] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
