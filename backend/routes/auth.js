@@ -56,7 +56,7 @@ const isCtaCte = (req, res, next) => {
 router.post('/login', async (req, res) => {
     const { nombre_usuario, password } = req.body;
     try {
-        const users = await userDb.query('SELECT * FROM user WHERE nombre_usuario = ?', [nombre_usuario], 'admin');
+        const users = await userDb.query('SELECT * FROM user WHERE nombre_usuario = ? COLLATE NOCASE', [nombre_usuario], 'admin');
         if (users.length === 0) return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
 
         const user = users[0];
