@@ -10,7 +10,7 @@ const Sidebar = ({ currentView, setView, collapsed, setCollapsed, mobileOpen, se
       <div className="sidebar-header" style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'space-between', padding: collapsed ? '10px 0' : '10px 15px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <img src="/favicon.svg" alt="Logo" style={{ width: '24px', height: '24px', objectFit: 'contain' }} />
-          {!collapsed && <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>OSEP Conversor</span>}
+          {!collapsed && <span style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>TOOLS Conversor</span>}
         </div>
         <button
           className="collapse-toggle"

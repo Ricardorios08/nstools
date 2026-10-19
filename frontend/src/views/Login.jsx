@@ -39,7 +39,7 @@ const Login = ({ onLogin }) => {
       <div className="login-card">
         <div className="login-header">
           <img src="/Logo-Nomade.svg" alt="Nomade Logo" style={{ width: "200px", marginBottom: "1rem" }} />
-          <h1 style={{ fontSize: "2.5rem", fontWeight: 800, letterSpacing: "0.15em", margin: "0 0 1.5rem" }}>OSEP</h1>
+          <h1 style={{ fontSize: "2.5rem", fontWeight: 800, letterSpacing: "0.15em", margin: "0 0 1.5rem" }}>TOOLS</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="login-form">
